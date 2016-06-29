@@ -1,4 +1,4 @@
-# Find Copies
+# Find/Compare Duplicates/Missing Files
 
 This bash script checks whether all files listed in the current directory
 are to be found in the target directory structure.
