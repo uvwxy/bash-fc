@@ -2,8 +2,14 @@
 
 OUT_DIR=$1
 
+COUNT_ORIG=0
+COUNT_OK=0
+
 for i in $(ls);
 do
+	let COUNT_ORIG+=1
+	md5orig=$(md5sum $i | cut -d " " -f1)
+
 	FN=$(find $OUT_DIR -iname "$i")
 
 	if [ "" == "$FN" ]
@@ -14,11 +20,11 @@ do
 		do
 
 			md5found=$(md5sum $j | cut -d " " -f1)	
-			md5orig=$(md5sum $i | cut -d " " -f1)
 
 			if [ "$md5orig" == "$md5found" ]
 			then
 				echo "$i $md5orig vs $md5found $j OK"
+				let COUNT_OK+=1
 			else
 				echo "$i $md5orig vs $md5found $j FAIL"
 			fi
@@ -28,3 +34,5 @@ do
 
 	echo ""
 done;
+
+echo "Found $COUNT_OK/$COUNT_ORIG"
